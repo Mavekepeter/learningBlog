@@ -49,11 +49,7 @@ const Header = () => {
                     About
                     </Link>
                 </Navbar.Link>
-                <Navbar.Link>
-                    <Link to='/sign-up'> 
-                    Sign In
-                    </Link>
-                </Navbar.Link>
+               
                 <Navbar.Link active={path ==="/projects"} as={'div'}>
                     <Link to='/projects'> 
                     projects
