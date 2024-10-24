@@ -1,10 +1,11 @@
-import { Table } from 'flowbite-react'
+import { Button, Table } from 'flowbite-react'
 import React,{useEffect,useState} from 'react'
 import {useSelector} from 'react-redux'
 import { Link } from 'react-router-dom'
 const DashPost = () => {
   const {currentUser} = useSelector((state)=>state.user)
   const [userPosts, setuserPosts] = useState([])
+  const [showMore, setshowMore] = useState(true)
   console.log(userPosts);
   
   useEffect(()=>{
@@ -14,6 +15,9 @@ const DashPost = () => {
         const data =await res.json()
         if (res.ok) {
           setuserPosts(data.posts)
+          if (data.post.length < 9) {
+            setshowMore(false);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -24,7 +28,24 @@ const DashPost = () => {
       fetchpost();
     }
   },[currentUser._id])
-  return (
+
+  const handleShowMore = async()=>{
+    const startIndex = userPosts.length;
+    try {
+      const res = await fetch(`/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`)
+      const data = await res.json();
+      if (res.ok) {
+        setuserPosts((prev)=>[...prev,...data.posts])
+      }
+      if (data.posts.length < 11) {
+        setshowMore(false);
+      }
+    } catch (error) {
+      console.log(error);
+      
+    }
+  }
+  return ( 
     <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-100 scrollbar-thumb-slate-300 dark:scrollbar-track-slate-700 dark:scrollbar-thumb-slate-500'>
       {currentUser.isAdmin && userPosts.length >0 ? (
         <>
@@ -70,6 +91,13 @@ const DashPost = () => {
             </Table.Body>
           ))}
         </Table>
+        {
+          showMore &&(
+            <button onClick={handleShowMore} className='w-full text-teal-500 self-center text-sm py-7'>
+              show more
+            </button>
+          )
+        }
         </>
       ) :(
         <p>You have no post yet</p>
