@@ -1,6 +1,7 @@
 import { Button, Spinner } from 'flowbite-react'
 import React, { useEffect,useState} from 'react'
 import { Link, useParams } from 'react-router-dom'
+import CallToAction from '../components/CallToAction'
 const PostPage = () => {
     const { postSlug } = useParams()
     const [loading, setloading] = useState(true)
@@ -52,8 +53,11 @@ const PostPage = () => {
             <span>{post && new Date(post.createdAt).toLocaleString()}</span>
             <span className='italic'>{post && (post.content.length /1000).toFixed(0)}mins read</span>
         </div>
-        <div className='p-3 max-2xl max-auto w-full post-content' dangerouslySetInnerHTML={{__html:post && post.content}}>
-
+        <div className='p-3 max-2xl max-auto w-full post-content' dangerouslySetInnerHTML=
+        {{__html:post && post.content}}>
+        </div>
+        <div className="max-w-4xl mx-auto w-full">
+            <CallToAction/>
         </div>
     </main>
   )
