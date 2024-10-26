@@ -58,6 +58,9 @@ const DashUsers = () => {
       if (res.ok) {
         setusers((prev)=>prev.filter((user)=>user._id !== userIdToDelete));
         setShowModal(false)
+      }else{
+        console.log(data.message);
+        
       }
     } catch (error) {
       console.log(error.message);
