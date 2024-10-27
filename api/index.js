@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoute.js'
 import authRoute from './routes/authRoute.js'
 import cookieparser from 'cookie-parser'
 import postRoutes from './routes/post.js'
+import commentRoutes from './routes/comment.js'
 dotenv.config();
 mongoose.connect(process.env.MONGO_URL)
 .then(()=>{
@@ -27,7 +28,7 @@ app.listen(3000,()=>{
 app.use('/api/user',userRoutes);
 app.use('/api/auth',authRoute);
 app.use('/api/post',postRoutes)
-
+app.use('/api/comment',commentRoutes)
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
     const message = err.message || 'Internal Server Error';
