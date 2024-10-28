@@ -1,7 +1,6 @@
 import bcryptjs from 'bcryptjs'
 import { errorHandler } from "../utils/error.js"
-import User from '../Models/userModel.js'
-
+import User from '../models/usermodel.js'
 export const test = (req,res)=>{
     res.json({message:'Api working'})
 }
